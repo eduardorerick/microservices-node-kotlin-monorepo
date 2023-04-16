@@ -17,6 +17,27 @@ services:
     depends_on:
       - akhq
 
+  db:
+    image: postgres
+    volumes:
+      - ./teste.sql:/docker-entrypoint-initdb.d/teste.sql
+    restart: always
+    command: -p 7895
+    expose:
+      - "7895"  
+    networks:
+      - microservices-node-kotlin-monorepo_default
+    environment:
+      POSTGRES_PASSWORD: admin
+  
+  adminer:
+    image: adminer
+    restart: always
+    networks:
+      - microservices-node-kotlin-monorepo_default
+    expose:
+      - "8080"
+
   akhq:
     
     # build:
